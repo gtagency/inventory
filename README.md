@@ -24,5 +24,8 @@ Setup/Prereqs:
 
 <pre>
 	sudo apt-get install python python-django
-	python agencyinventory/manage.py syncdb
+	#database config
+	python manage.py syncdb
+	#run server broseph man
+	python manage.py runserver
 </pre>
