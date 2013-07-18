@@ -24,4 +24,5 @@ Setup/Prereqs:
 
 <pre>
 	sudo apt-get install python python-django
+	python agencyinventory/manage.py syncdb
 </pre>
