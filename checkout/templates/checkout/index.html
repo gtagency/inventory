@@ -1,0 +1,10 @@
+Hey, sup
+{% if items %}
+	<ul>
+		{%for itm in items%}
+			<li>
+				{% include 'checkout/item_templ.html' with item=itm %}			
+			</li>
+		{%endfor%}
+	</ul>
+{% endif %}

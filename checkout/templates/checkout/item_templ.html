@@ -1,0 +1,8 @@
+<h1>{{item.title}}</h1>
+<img src='{{item.image}}'>
+<span>
+	{% if not item.checked_out %}Last{%endif%} Checked out by:
+	{{item.owner}}
+</span>
+<p>{{item.description}}</p>
+
