@@ -1,10 +1,61 @@
+<style type='text/css'>
+	.checked_out {
+		color: #ccc;
+	}
+	.checked_out:after {
+		content: " - checked out :( ";
+	}
+</style>
+
 Hey, sup
-{% if items %}
-	<ul>
-		{%for itm in items%}
-			<li>
-				{% include 'checkout/item_templ.html' with item=itm %}			
-			</li>
-		{%endfor%}
-	</ul>
-{% endif %}
+<ul id='items'>
+</ul>
+
+<input type='text' id='code'>
+
+<script type='text/javascript'>
+	var items = [],
+		list = document.getElementById('items');
+	function fetchItem(code) {
+		var req = new XMLHttpRequest();
+		req.open('GET', 'get/' + code);
+		req.send();
+		req.onreadystatechange = function() {
+			if(req.readyState === 4 && req.status === 200) {
+				items.push(JSON.parse(req.responseText));
+				updateList();	
+			}
+			else if(req.readyState === 4 && code.indexOf('902')===0) {
+				submit(code);
+			}
+
+		}
+	}
+
+	function updateList() {
+		list.innerHTML = "";
+		for(var i=0;i<items.length;i++) {
+			var item = items[i];
+			list.innerHTML += '<li><h1 class="'+ (item.checked_out ? 'checked_out' : '') +'">'+item.title+'</h1></li>';
+		}
+	}
+
+	function submit(user_id) {
+		var req = new XMLHttpRequest();
+		req.open('POST', 'checkout/');
+		req.setRequestHeader("Content-Type", "application/json");
+		req.send(JSON.stringify({
+			items: items.map(function(el){return el.code}),
+			user: user_id
+		}));
+	}
+
+	document.getElementById('code').addEventListener('keypress',
+		function(event) {
+			if(event.keyCode === 13) {
+				fetchItem(this.value);
+				this.value = '';
+			}
+		});
+			
+</script>
