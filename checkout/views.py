@@ -29,6 +29,9 @@ def checkout(request):
 			item.checked_out = True
 			item.owner = user
 			item.save()
+		else if item.owner == user:
+			item.checked_out = False
+			item.save()
 			
 	return HttpResponse("Checked out all ur books bro")
 
