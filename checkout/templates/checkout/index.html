@@ -7,7 +7,7 @@
 	}
 </style>
 
-Hey, sup
+Hey, have you <a href='register'>registered</a> yet?
 <ul id='items'>
 </ul>
 
@@ -16,6 +16,7 @@ Hey, sup
 <script type='text/javascript'>
 	var items = [],
 		list = document.getElementById('items');
+
 	function fetchItem(code) {
 		var req = new XMLHttpRequest();
 		req.open('GET', 'get/' + code);
@@ -36,7 +37,7 @@ Hey, sup
 		list.innerHTML = "";
 		for(var i=0;i<items.length;i++) {
 			var item = items[i];
-			list.innerHTML += '<li><h1 class="'+ (item.checked_out ? 'checked_out' : '') +'">'+item.title+'</h1></li>';
+			list.innerHTML += '<li><img src="'+item.image+'"><h1 class="'+ (item.checked_out ? 'checked_out' : '') +'">'+item.title+'</h1></li>';
 		}
 	}
 
@@ -49,8 +50,10 @@ Hey, sup
 			user: user_id
 		}));
 	}
-
-	document.getElementById('code').addEventListener('keypress',
+	
+	var code = 	document.getElementById('code');
+	code.focus();
+	code.addEventListener('keypress',
 		function(event) {
 			if(event.keyCode === 13) {
 				fetchItem(this.value);
